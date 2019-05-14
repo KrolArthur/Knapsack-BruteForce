@@ -11,6 +11,7 @@ class BruteForce constructor(var file: File,
         var tmpMaxWeight: Int = 0
         var tmpMaxValue: Int = 0
         var vector: CharArray = charArrayOf()
+        var additionalVectors: MutableList<CharArray> = mutableListOf()
         this.file.forEachLine {
            val splitted:List<String> = it.split(" ")
             if(splitted.size == 1)
@@ -36,7 +37,11 @@ class BruteForce constructor(var file: File,
                     maxValue = tmpMaxValue
                     maxWeight = tmpMaxWeight
                     vector = str
+                    additionalVectors.clear()
+                    additionalVectors.add(str)
 
+                }else if (tmpMaxWeight <= this.capacity && tmpMaxValue == maxValue){
+                    additionalVectors.add(str)
                 }
             }
             Thread.sleep(100)
@@ -44,11 +49,9 @@ class BruteForce constructor(var file: File,
             tmpMaxWeight = 0
         }
         println()
-        vector.forEach { print(it) }
+       additionalVectors.forEach { c: CharArray -> println(c) }
     }
 
-    fun showList(){this.list.forEach { item: Item -> println(item.toString()) }}
-    fun showCombinations() {this.combinations.forEach { println(it) }}
     private fun convertDecimalToBinary(n: Int): String {
         var m = n
         var n = n
